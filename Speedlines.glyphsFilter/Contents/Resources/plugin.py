@@ -14,7 +14,8 @@
 #
 ###########################################################################################################
 
-
+import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 import math, random
 
@@ -47,115 +48,82 @@ class Speedlines(FilterWithDialog):
 		random.seed()
 		
 		# Set default setting if not present
-		if not Glyphs.defaults['com.mekkablue.Speedlines.number']:
-			Glyphs.defaults['com.mekkablue.Speedlines.number'] = 5
-		self.numberField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.number'])
+		Glyphs.registerDefault('com.mekkablue.Speedlines.maxDistance', 30)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.maxGap', 50)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.maxLength', 200)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.minDistance', 0)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.minGap', 10)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.minLength', 50)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.number', 5)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.right', 0)
+		Glyphs.registerDefault('com.mekkablue.Speedlines.thickness', 20)
 
-		if not Glyphs.defaults['com.mekkablue.Speedlines.thickness']:
-			Glyphs.defaults['com.mekkablue.Speedlines.thickness'] = 20
-		self.thicknessField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.thickness'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.minDistance']:
-			Glyphs.defaults['com.mekkablue.Speedlines.minDistance'] = 0
-		self.minDistanceField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minDistance'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.maxDistance']:
-			Glyphs.defaults['com.mekkablue.Speedlines.maxDistance'] = 30
+		# populate GUI fields
 		self.maxDistanceField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.maxDistance'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.minLength']:
-			Glyphs.defaults['com.mekkablue.Speedlines.minLength'] = 50
-		self.minLengthField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minLength'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.maxLength']:
-			Glyphs.defaults['com.mekkablue.Speedlines.maxLength'] = 200
-		self.maxLengthField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.maxLength'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.minGap']:
-			Glyphs.defaults['com.mekkablue.Speedlines.minGap'] = 10
-		self.minGapField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minGap'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.maxGap']:
-			Glyphs.defaults['com.mekkablue.Speedlines.maxGap'] = 50
 		self.maxGapField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.maxGap'])
-
-		if not Glyphs.defaults['com.mekkablue.Speedlines.right']:
-			Glyphs.defaults['com.mekkablue.Speedlines.right'] = 0
+		self.maxLengthField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.maxLength'])
+		self.minDistanceField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minDistance'])
+		self.minGapField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minGap'])
+		self.minLengthField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.minLength'])
+		self.numberField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.number'])
 		self.rightCheckbox.setIntValue_(Glyphs.defaults['com.mekkablue.Speedlines.right'])
+		self.thicknessField.setStringValue_(Glyphs.defaults['com.mekkablue.Speedlines.thickness'])
 		
 		# Set focus to text field
 		self.numberField.becomeFirstResponder()
 		
-	# Action triggered by UI
 	@objc.IBAction
 	def setRight_( self, sender ):
 		# Store right coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.right'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 			
-	# Action triggered by UI
 	@objc.IBAction
 	def setNumber_( self, sender ):
 		# Store number coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.number'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setThickness_( self, sender ):
 		# Store thickness coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.thickness'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMinDistance_( self, sender ):
 		# Store minDistance coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.minDistance'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMaxDistance_( self, sender ):
 		# Store maxDistance coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.maxDistance'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMinLength_( self, sender ):
 		# Store minLength coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.minLength'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMaxLength_( self, sender ):
 		# Store maxLength coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.maxLength'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMinGap_( self, sender ):
 		# Store minLength coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.minGap'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
-	# Action triggered by UI
 	@objc.IBAction
 	def setMaxGap_( self, sender ):
 		# Store maxLength coming in from dialog
 		Glyphs.defaults['com.mekkablue.Speedlines.maxGap'] = sender.intValue()
-		# Trigger redraw
 		self.update()
 	
 	def getValueForKey( self, customParameters, key ):

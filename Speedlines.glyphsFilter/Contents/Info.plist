@@ -19,13 +19,13 @@
 	<key>CFBundleVersion</key>
 	<string>2</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.01</string>
+	<string>1.1</string>
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/mekkablue/Speedlines/master/Speedlines.glyphsFilter/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/mekkablue/Speedlines</string>
 	<key>productReleaseNotes</key>
-	<string>Implemented min and max gap</string>
+	<string>Code cleanup.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Rainer Erich Scheichelbauer, 2017</string>
 	<key>NSPrincipalClass</key>
