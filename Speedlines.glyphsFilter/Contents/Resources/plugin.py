@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
 
 ###########################################################################################################
 #
@@ -37,6 +38,7 @@ class Speedlines(FilterWithDialog):
 	maxGapField = objc.IBOutlet()
 	rightCheckbox = objc.IBOutlet()
 	
+	@objc.python_method
 	def settings(self):
 		self.menuName = Glyphs.localize({'en': u'Speedlines', 'de': u'Wuscher'})
 		
@@ -44,6 +46,7 @@ class Speedlines(FilterWithDialog):
 		self.loadNib('IBdialog', __file__)
 	
 	# On dialog show
+	@objc.python_method
 	def start(self):
 		random.seed()
 		
@@ -126,6 +129,7 @@ class Speedlines(FilterWithDialog):
 		Glyphs.defaults['com.mekkablue.Speedlines.maxGap'] = sender.intValue()
 		self.update()
 	
+	@objc.python_method
 	def getValueForKey( self, customParameters, key ):
 		try:
 			if customParameters.has_key(key):
@@ -136,10 +140,10 @@ class Speedlines(FilterWithDialog):
 		except Exception as e:
 			self.logToConsole( "getValueForKey: %s" % str(e) )
 			import traceback
-			print traceback.format_exc()
+			print(traceback.format_exc())
 			return None
 	
-	
+	@objc.python_method
 	def italicize( self, x, y, italicAngle=0.0, pivotalY=0.0 ):
 		"""
 		Returns the italicized position of an NSPoint 'thisPoint'
@@ -155,6 +159,7 @@ class Speedlines(FilterWithDialog):
 		x += horizontalDeviance # x of point that is yOffset from pivotal point
 		return x
 	
+	@objc.python_method
 	def offsetLayer( self, thisLayer, offset, makeStroke=False, position=0.5, autoStroke=False ):
 		offsetFilter = NSClassFromString("GlyphsFilterOffsetCurve")
 		offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_error_shadow_(
@@ -166,6 +171,7 @@ class Speedlines(FilterWithDialog):
 			None, None )
 	
 	# Actual filter
+	@objc.python_method
 	def filter(self, layer, inEditView, customParameters):
 		# query user input
 		number = int(self.getValueForKey(customParameters,"number"))
@@ -252,7 +258,7 @@ class Speedlines(FilterWithDialog):
 				)
 				bottomY -= gapBetweenSpeedlineBottoms
 
-	
+	@objc.python_method
 	def generateCustomParameter( self ):
 		return "%s; number:%s; thickness:%s; minDistance:%s; maxDistance:%s; minLength:%s; maxLength:%s; minGap:%s; maxGap:%s; right:%i" % (
 			self.__class__.__name__,
@@ -267,6 +273,7 @@ class Speedlines(FilterWithDialog):
 			Glyphs.defaults['com.mekkablue.Speedlines.right'],
 		)
 	
+	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
