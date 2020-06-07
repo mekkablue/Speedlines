@@ -132,7 +132,7 @@ class Speedlines(FilterWithDialog):
 	@objc.python_method
 	def getValueForKey( self, customParameters, key ):
 		try:
-			if customParameters.has_key(key):
+			if key in customParameters:
 				value = customParameters[key]
 			else:
 				value = float(Glyphs.defaults['com.mekkablue.Speedlines.%s'%key])
