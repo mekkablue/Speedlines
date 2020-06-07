@@ -18,6 +18,7 @@ from __future__ import division, print_function, unicode_literals
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
+from Foundation import NSClassFromString
 import math, random
 
 class Speedlines(FilterWithDialog):
@@ -162,13 +163,24 @@ class Speedlines(FilterWithDialog):
 	@objc.python_method
 	def offsetLayer( self, thisLayer, offset, makeStroke=False, position=0.5, autoStroke=False ):
 		offsetFilter = NSClassFromString("GlyphsFilterOffsetCurve")
-		offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_error_shadow_(
-			thisLayer,
-			0, offset, # horizontal and vertical offset
-			makeStroke,     # if True, creates a stroke
-			autoStroke,     # if True, distorts resulting shape to vertical metrics
-			position,       # stroke distribution to the left and right, 0.5 = middle
-			None, None )
+		try:
+			# GLYPHS 3:	
+			offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_metrics_error_shadow_capStyleStart_capStyleEnd_keepCompatibleOutlines_(
+				thisLayer,
+				offset, offset, # horizontal and vertical offset
+				makeStroke,     # if True, creates a stroke
+				autoStroke,     # if True, distorts resulting shape to vertical metrics
+				position,       # stroke distribution to the left and right, 0.5 = middle
+				None, None, None, 0, 0, False )
+		except:
+			# GLYPHS 2:
+			offsetFilter.offsetLayer_offsetX_offsetY_makeStroke_autoStroke_position_error_shadow_(
+				thisLayer,
+				offset, offset, # horizontal and vertical offset
+				makeStroke,     # if True, creates a stroke
+				autoStroke,     # if True, distorts resulting shape to vertical metrics
+				position,       # stroke distribution to the left and right, 0.5 = middle
+				None, None )
 	
 	# Actual filter
 	@objc.python_method
