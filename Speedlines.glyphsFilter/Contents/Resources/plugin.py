@@ -16,9 +16,9 @@ from __future__ import division, print_function, unicode_literals
 ###########################################################################################################
 
 import objc
-from GlyphsApp import *
-from GlyphsApp.plugins import *
-from Foundation import NSClassFromString
+from GlyphsApp import Glyphs
+from GlyphsApp.plugins import FilterWithDialog
+from Foundation import NSClassFromString, NSPoint
 import math, random
 
 class Speedlines(FilterWithDialog):
